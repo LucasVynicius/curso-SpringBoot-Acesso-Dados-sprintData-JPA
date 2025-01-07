@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 
+
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "autor", schema = "public")
-@ToString
-@Getter
-@Setter
 public class Autor {
 
     @Id
@@ -30,6 +32,7 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "autor")
+    //@OneToMany(mappedBy = "autor")
+    @Transient
     private List<Livro> livros;
 }
