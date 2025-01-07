@@ -1,0 +1,34 @@
+# Rodar container Postgre na versão 17.2
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library postgres:17.2
+
+# Rodar PgAdmin 4
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
+
+#Stopar os dockes
+docker stop {username do container}
+
+#Remover container docker
+docker container rm {username do container}
+
+#Criar uma network para os containes se comunicarem
+docker network create nomedocontainer-network
+
+# Rodar a network para os container docker se comunicar
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network d postgres:17.2
+
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
+
+# Rodar os comandos em background, para pode fechar o cmd/power shell
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network -d postgres:17.2
+
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network -d dpage/pgadmin4
+
+// Problemas que podem ocorrer com o ambiente no Docker
+
+Problemas com a porta
+#Verificar se a porta está sendo utilizada
+
+netstat -aof
+
+# Check port:
+netstat -aof | findstr 5432
