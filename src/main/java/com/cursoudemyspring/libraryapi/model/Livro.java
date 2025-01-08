@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name ="livro")
 @Data
 public class Livro {

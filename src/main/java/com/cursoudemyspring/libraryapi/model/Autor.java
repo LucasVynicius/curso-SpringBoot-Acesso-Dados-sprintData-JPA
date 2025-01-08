@@ -11,11 +11,12 @@ import java.util.UUID;
 
 
 
+
+@Entity
+@Table(name = "autor", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "autor", schema = "public")
 public class Autor {
 
     @Id
