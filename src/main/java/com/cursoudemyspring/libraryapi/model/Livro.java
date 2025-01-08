@@ -35,7 +35,10 @@ public class Livro {
     @Column(name = "preco")
     private Double preco;
 
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne(
+//            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     @JoinColumn(name = "id_autor")
     private Autor autor;
 

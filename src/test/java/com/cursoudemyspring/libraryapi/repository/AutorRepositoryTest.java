@@ -1,11 +1,14 @@
 package com.cursoudemyspring.libraryapi.repository;
 
+import com.cursoudemyspring.libraryapi.enums.GeneroLivro;
 import com.cursoudemyspring.libraryapi.model.Autor;
+import com.cursoudemyspring.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +18,9 @@ public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTest(){
@@ -63,5 +69,28 @@ public class AutorRepositoryTest {
         var id = UUID.fromString("6d5aa18d-c785-4108-8c36-0e5dbeec5674");
         var lucas = repository.findById(id).get();
         repository.delete(lucas);
+    }
+
+    @Test
+    void salvaAutorComLivroTest(){
+        Autor autor = new Autor();
+        autor.setNome("Lucas");
+        autor.setNacionalidade("Brasileiro");
+        autor.setData_nascimento(LocalDate.of(1950, 1, 31));
+
+        Livro livro = new Livro();
+        livro.setIsbn("90887-84874");
+        livro.setPreco(250.0);
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("Mansão do Terror");
+        livro.setData_publicacao(LocalDate.of(1980, 1, 2));
+        livro.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+        autor.getLivros().add(livro);
+
+        repository.save(autor);
+
+        livroRepository.saveAll(autor.getLivros());
     }
 }
