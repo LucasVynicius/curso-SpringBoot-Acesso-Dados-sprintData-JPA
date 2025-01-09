@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -119,4 +120,26 @@ public class LivroRepositoryTest {
 
 
     }
+
+
+    @Test
+    void pesquisarPorTituloTest(){
+        List<Livro> lista = repository.findByTitulo("");
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    void pesquisarPorIsbnTest(){
+        List<Livro> lista = repository.findByIsbn("");
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    void pesquisarPorTituloEPreco(){
+        var preco = Double.valueOf(100.0);
+        List<Livro> lista = repository.findByTituloAndPreco("Outro livro 2", preco);
+        lista.forEach(System.out::println);
+    }
+
+
 }
