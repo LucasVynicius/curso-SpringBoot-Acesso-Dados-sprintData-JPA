@@ -11,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name ="livro")
+@ToString(exclude = {"autor"})
 @Data
 public class Livro {
 
