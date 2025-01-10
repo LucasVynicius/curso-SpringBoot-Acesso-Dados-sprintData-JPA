@@ -67,7 +67,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void delete(){
-        var id = UUID.fromString("6d5aa18d-c785-4108-8c36-0e5dbeec5674");
+        var id = UUID.fromString("3b4351e4-e1d4-48e4-8a98-af50d0815c98");
         var lucas = repository.findById(id).get();
         repository.delete(lucas);
     }
@@ -84,7 +84,7 @@ public class AutorRepositoryTest {
         livro.setPreco(250.0);
         livro.setGenero(GeneroLivro.MISTERIO);
         livro.setTitulo("Mansão do Terror");
-        livro.setData_publicacao(LocalDate.of(1980, 1, 2));
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
         livro.setAutor(autor);
 
         autor.setLivros(new ArrayList<>());

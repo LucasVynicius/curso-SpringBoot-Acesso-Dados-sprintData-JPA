@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -29,7 +28,7 @@ public class LivroRepositoryTest {
         livro.setPreco(100.0);
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("UFO");
-        livro.setData_publicacao(LocalDate.of(1980, 1, 2));
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
 
         Autor autor = autorRepository.findById(UUID.fromString("2a5ef0b7-ec62-404d-af81-f13d1e3c82ad")).orElse(null);
         livro.setAutor(autor);
@@ -49,7 +48,7 @@ public class LivroRepositoryTest {
         livro.setPreco(100.0);
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("Outro livro 2");
-        livro.setData_publicacao(LocalDate.of(1980, 1, 2));
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
 
         Autor autor = new Autor();
         autor.setNome("Miguel");
@@ -72,7 +71,7 @@ public class LivroRepositoryTest {
         livro.setPreco(100.0);
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("Outro livro");
-        livro.setData_publicacao(LocalDate.of(1980, 1, 2));
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
 
         Autor autor = new Autor();
         autor.setNome("Lucas");
@@ -141,5 +140,10 @@ public class LivroRepositoryTest {
         lista.forEach(System.out::println);
     }
 
+    @Test
+    void listarLivrosComQueryJPQL(){
+        var resultado = repository.listarTodosOrdenadosPorTituloAndPreco();
+        resultado.forEach(System.out::println);
+    }
 
 }
