@@ -1,9 +1,11 @@
 package com.cursoudemyspring.libraryapi.repository;
 
+import com.cursoudemyspring.libraryapi.enums.GeneroLivro;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -44,4 +46,33 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     // select l from Livro as l order by l.titulo
     @Query(" select l from Livro as l order by l.titulo, l.preco")
     List<Livro> listarTodosOrdenadosPorTituloAndPreco();
+
+    /**select from livro l join autor a on a.id = l.id_autor;**/
+    @Query("select a from Livro l join l.autor a")
+    List<Autor> listarAutoresDosLivros();
+
+    // select distinct l.* from Livro l
+    @Query("select distinct l.titulo from Livro l")
+    List<String> listarNomesDiferentesLivros();
+
+    @Query("""
+            select l.genero
+            from Livro l
+            join l.autor a
+            where a.nacionalidade = 'Brasileiro'
+            order by l.genero
+            """)
+    List<String> listarGenerosAutoresBrasileiros();
+
+    // Named Parameters = parametros nomeados
+    @Query("select l from Livro l where l.genero = :genero order by :paramOrdenacao")
+    List<Livro> findByGenero(@Param("genero") GeneroLivro generoLivro,
+                             @Param("paramOrdenacao") String nomePropriedade
+    );
+
+    // Positional Parameters = parametros nomeados
+    @Query("select l from Livro l where l.genero = ?1 order by ?2")
+    List<Livro> findByGeneroPositionParameters(@Param("genero") GeneroLivro generoLivro,
+                             @Param("paramOrdenacao") String nomePropriedade
+    );
 }

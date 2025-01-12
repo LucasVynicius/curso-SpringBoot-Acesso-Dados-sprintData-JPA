@@ -4,7 +4,7 @@ docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGR
 # Rodar PgAdmin 4
 docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
 
-#Stopar os dockes
+# Stopar os dockes
 docker stop {username do container}
 
 #Remover container docker
