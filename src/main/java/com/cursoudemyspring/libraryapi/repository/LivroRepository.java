@@ -4,9 +4,11 @@ import com.cursoudemyspring.libraryapi.enums.GeneroLivro;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -75,4 +77,14 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     List<Livro> findByGeneroPositionParameters(@Param("genero") GeneroLivro generoLivro,
                              @Param("paramOrdenacao") String nomePropriedade
     );
+
+    @Modifying
+    @Transactional
+    @Query("delete from Livro where genero = ?1")
+    void deleteByGenero(GeneroLivro genero);
+
+    @Modifying
+    @Transactional
+    @Query("update Livro set dataPublicacao = ?1 ")
+    void updateDataPublicacao(LocalDate novaData);
 }
