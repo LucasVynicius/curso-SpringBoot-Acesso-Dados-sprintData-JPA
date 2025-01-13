@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 public class TransacaoService {
@@ -18,6 +19,19 @@ public class TransacaoService {
     private AutorRepository autorRepository;
     @Autowired
     private LivroRepository livroRepository;
+
+    @Transactional
+    public void salvarLivroComFoto(){
+
+    }
+
+    @Transactional
+    public void atualizacaoSemAtualizar(){
+        var livro = livroRepository.findById(UUID.fromString("b927e77d-b93b-465d-a569-7af2e3ee5992")).orElse(null);
+
+        livro.setDataPublicacao(LocalDate.of(2024, 6, 1));
+
+    }
 
     @Transactional
     public void executar(){

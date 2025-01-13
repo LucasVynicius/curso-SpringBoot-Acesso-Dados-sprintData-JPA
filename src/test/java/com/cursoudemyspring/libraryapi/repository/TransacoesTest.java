@@ -22,4 +22,9 @@ public class TransacoesTest {
     void transacaoSimples(){
         transacaoService.executar();
     }
+
+    @Test
+    void transacaoEstadoManaged(){
+        transacaoService.atualizacaoSemAtualizar();
+    }
 }
