@@ -21,11 +21,6 @@ public class TransacaoService {
     private LivroRepository livroRepository;
 
     @Transactional
-    public void salvarLivroComFoto(){
-
-    }
-
-    @Transactional
     public void atualizacaoSemAtualizar(){
         var livro = livroRepository.findById(UUID.fromString("b927e77d-b93b-465d-a569-7af2e3ee5992")).orElse(null);
 
@@ -35,7 +30,6 @@ public class TransacaoService {
 
     @Transactional
     public void executar(){
-
         //Salva o Autor
         Autor autor = new Autor();
         autor.setNome("Vania");
