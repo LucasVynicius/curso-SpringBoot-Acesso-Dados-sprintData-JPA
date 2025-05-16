@@ -1,8 +1,8 @@
 # Rodar container Postgre na versão 17.2
-docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library postgres:17.2
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library postgres:16.3
 
 # Rodar PgAdmin 4
-docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin dpage/pgadmin4:8.9
 
 # Stopar os dockes
 docker stop {username do container}
@@ -14,14 +14,14 @@ docker container rm {username do container}
 docker network create nomedocontainer-network
 
 # Rodar a network para os container docker se comunicar
-docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network postgres:17.2
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=Vyni1995 -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network postgres:17.2
 
 docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network dpage/pgadmin4
 
 # Rodar os comandos em background, para pode fechar o cmd/power shell
-docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library --network library-network -d postgres:17.2
+docker run --name librarydb -p 5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=library -d --network library-network  postgres:17.2
 
-docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin --network library-network -d dpage/pgadmin4
+docker run --name pgadmin4 -p 15432:80 -e PGADMIN_DEFAULT_EMAIL=admin@admin.com -e PGADMIN_DEFAULT_PASSWORD=admin -d --network library-network  dpage/pgadmin4
 
 // Problemas que podem ocorrer com o ambiente no Docker
 
@@ -31,4 +31,4 @@ Problemas com a porta
 netstat -aof
 
 # Check port:
-netstat -aof | findstr 5432
+netstat -aof | findstr 5432'
