@@ -3,31 +3,51 @@ package com.cursoudemyspring.libraryapi.controller;
 import com.cursoudemyspring.libraryapi.dto.AutorDTO;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.service.AutorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+import java.util.Optional;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/autores")
 public class AutorController {
 
-    private final AutorService autorService;
+    @Autowired
+    private AutorService autorService;
 
-    public AutorController(AutorService autorService) {
-        this.autorService = autorService;
-    }
 
     @PostMapping
-    public ResponseEntity salvar (@RequestBody AutorDTO autor){
+    public ResponseEntity<Void> salvar (@RequestBody AutorDTO autor){
         Autor autorEntidade = autor.dadosAutor();
         autorService.salvar(autorEntidade);
 
-        ServletUriComponentsBuilder;
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}").
+                buildAndExpand(autorEntidade).
+                toUri();
 
-        return new ResponseEntity("Autor Salvo com Sucesso! " + autor, HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
-    @GetMapping
-    public ResponseEntity buscar(){}
+   @GetMapping("/{id}")
+    public ResponseEntity obterDetalhes(@PathVariable("id") String id){
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+       if (autorOptional.isPresent()) {
+            Autor autor = autorOptional.get();
+            AutorDTO autorDTO = new AutorDTO(autor.getId(),
+                    autor.getNome(),
+                    autor.getData_nascimento(),
+                    autor.getNacionalidade());
+            return ResponseEntity.ok(autorDTO);
+       }
+
+       return ResponseEntity.notFound().build();
+    }
 }

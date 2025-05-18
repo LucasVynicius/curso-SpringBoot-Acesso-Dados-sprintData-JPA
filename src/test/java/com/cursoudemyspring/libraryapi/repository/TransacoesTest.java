@@ -18,7 +18,7 @@ public class TransacoesTest {
      * Commit -> Confirmar as alterações
      * Rollback -> Desfazer as alterações
      * */
-    @Test
+    /*@Test
     void transacaoSimples(){
         transacaoService.executar();
     }
@@ -26,5 +26,5 @@ public class TransacoesTest {
     @Test
     void transacaoEstadoManaged(){
         transacaoService.atualizacaoSemAtualizar();
-    }
+    }*/
 }

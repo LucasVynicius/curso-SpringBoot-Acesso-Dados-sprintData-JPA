@@ -20,12 +20,12 @@ public class TransacaoService {
     @Autowired
     private LivroRepository livroRepository;
 
-    @Transactional
+    /**@Transactional
     public void salvarLivroComFoto(){
 
     }
 
-    /**@Transactional
+    @Transactional
     public void atualizacaoSemAtualizar(){
         var livro = livroRepository.findById(UUID.fromString("b927e77d-b93b-465d-a569-7af2e3ee5992")).orElse(null);
 
@@ -59,5 +59,5 @@ public class TransacaoService {
         if (autor.getNome().equals("Vania")){
             throw new RuntimeException("Rollback!");
         }
-    }*/
+    }**/
 }
