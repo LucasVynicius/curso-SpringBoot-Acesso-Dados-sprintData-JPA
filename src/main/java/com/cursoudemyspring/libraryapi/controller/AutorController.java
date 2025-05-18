@@ -70,6 +70,25 @@ public class AutorController {
         return ResponseEntity.ok(lista);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Void> atualizar(@PathVariable("id") String id,@RequestBody AutorDTO autorDTO){
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+
+        if (autorOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        var autor = autorOptional.get();
+        autor.setNome(autorDTO.nome());
+        autor.setData_nascimento(autorDTO.data_nascimento());
+        autor.setNacionalidade(autorDTO.nacionalidade());
+
+        autorService.atualizar(autor);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable("id") String id){
         var idAutor = UUID.fromString(id);
