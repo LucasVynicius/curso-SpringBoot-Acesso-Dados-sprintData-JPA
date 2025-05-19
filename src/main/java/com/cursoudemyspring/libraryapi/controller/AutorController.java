@@ -2,6 +2,7 @@ package com.cursoudemyspring.libraryapi.controller;
 
 import com.cursoudemyspring.libraryapi.dto.AutorDTO;
 import com.cursoudemyspring.libraryapi.dto.ErroResposta;
+import com.cursoudemyspring.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import com.cursoudemyspring.libraryapi.exceptions.RegistroDuplicadoException;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.service.AutorService;
@@ -76,34 +77,47 @@ public class AutorController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable("id") String id,@RequestBody AutorDTO autorDTO){
-        var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+    public ResponseEntity<Object> atualizar(@PathVariable("id") String id,@RequestBody AutorDTO autorDTO){
 
-        if (autorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+        try {
+            var idAutor = UUID.fromString(id);
+            Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            var autor = autorOptional.get();
+            autor.setNome(autorDTO.nome());
+            autor.setDataNascimento(autorDTO.dataNascimento());
+            autor.setNacionalidade(autorDTO.nacionalidade());
+
+            autorService.atualizar(autor);
+
+            return ResponseEntity.noContent().build();
+        }catch (RegistroDuplicadoException e ){
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
         }
-
-        var autor = autorOptional.get();
-        autor.setNome(autorDTO.nome());
-        autor.setDataNascimento(autorDTO.dataNascimento());
-        autor.setNacionalidade(autorDTO.nacionalidade());
-
-        autorService.atualizar(autor);
-
-        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") String id){
-        var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id){
+        try {
 
-        if (autorOptional.isEmpty()){
-            return ResponseEntity.notFound().build();
+
+            var idAutor = UUID.fromString(id);
+            Optional<Autor> autorOptional = autorService.obterPorId(idAutor);
+
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            autorService.deletar(autorOptional.get());
+            return ResponseEntity.noContent().build();
+        } catch (OperacaoNaoPermitidaException e){
+            var erroResposta = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroResposta.status()).body(erroResposta);
         }
-
-        autorService.deletar(autorOptional.get());
-        return ResponseEntity.noContent().build();
     }
 }

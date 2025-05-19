@@ -27,7 +27,7 @@ public class AutorRepositoryTest {
         Autor autor = new Autor();
         autor.setNome("Lucas");
         autor.setNacionalidade("Brasileiro");
-        autor.setData_nascimento(LocalDate.of(1950, 1, 31));
+        autor.setDataNascimento(LocalDate.of(1950, 1, 31));
 
         var autorSalvo = repository.save(autor);
         System.out.println("Autor Salvo: " + autorSalvo);
@@ -46,7 +46,7 @@ public class AutorRepositoryTest {
             System.out.println(possivelAutor.get());
 
             autorEncontrado.setNome("Everaldo Albuquerque");
-            autorEncontrado.setData_nascimento(LocalDate.of(1973, 8, 8));
+            autorEncontrado.setDataNascimento(LocalDate.of(1973, 8, 8));
 
             repository.save(autorEncontrado);
         }
@@ -76,7 +76,7 @@ public class AutorRepositoryTest {
         Autor autor = new Autor();
         autor.setNome("Lucas");
         autor.setNacionalidade("Brasileiro");
-        autor.setData_nascimento(LocalDate.of(1950, 1, 31));
+        autor.setDataNascimento(LocalDate.of(1950, 1, 31));
 
         Livro livro = new Livro();
         livro.setIsbn("90887-84874");

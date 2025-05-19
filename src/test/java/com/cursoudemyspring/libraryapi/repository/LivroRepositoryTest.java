@@ -30,7 +30,7 @@ public class LivroRepositoryTest {
         livro.setTitulo("Mangá");
         livro.setDataPublicacao(LocalDate.of(1995, 12, 11));
 
-        Autor autor = autorRepository.findById(UUID.fromString("e255248c-2028-4541-b186-e1b0035f8a19")).orElse(null);
+        Autor autor = autorRepository.findById(UUID.fromString("50454f4e-5825-422a-9b89-74dabad80e0a")).orElse(null);
         livro.setAutor(autor);
 
 
@@ -53,7 +53,7 @@ public class LivroRepositoryTest {
         Autor autor = new Autor();
         autor.setNome("Miguel");
         autor.setNacionalidade("Brasileiro");
-        autor.setData_nascimento(LocalDate.of(1995, 12, 11));
+        autor.setDataNascimento(LocalDate.of(1995, 12, 11));
 
         autorRepository.save(autor);
 
@@ -76,7 +76,7 @@ public class LivroRepositoryTest {
         Autor autor = new Autor();
         autor.setNome("Lucas");
         autor.setNacionalidade("Brasileiro");
-        autor.setData_nascimento(LocalDate.of(1995, 12, 11));
+        autor.setDataNascimento(LocalDate.of(1995, 12, 11));
 
 
         livro.setAutor(autor);
@@ -101,7 +101,7 @@ public class LivroRepositoryTest {
 
     @Test
     void deletar(){
-        UUID id = UUID.fromString("5c522eab-44e0-49bb-abab-7df377803db1");
+        UUID id = UUID.fromString("b2a3c03a-7a84-4976-a155-66defbfb9647");
 
         repository.deleteById(id);
     }
