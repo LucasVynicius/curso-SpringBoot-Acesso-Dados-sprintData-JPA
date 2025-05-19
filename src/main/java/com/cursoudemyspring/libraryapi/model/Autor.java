@@ -33,7 +33,7 @@ public class Autor {
     private String  nome;
 
     @Column(name = "data_nascimento", nullable = false)
-    private LocalDate data_nascimento;
+    private LocalDate dataNascimento;
 
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
@@ -68,12 +68,12 @@ public class Autor {
         this.nome = nome;
     }
 
-    public LocalDate getData_nascimento() {
-        return data_nascimento;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setData_nascimento(LocalDate data_nascimento) {
-        this.data_nascimento = data_nascimento;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getNacionalidade() {

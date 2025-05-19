@@ -1,8 +1,9 @@
 package com.cursoudemyspring.libraryapi.service;
 
-import com.cursoudemyspring.libraryapi.controller.AutorController;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.repository.AutorRepository;
+import com.cursoudemyspring.libraryapi.validator.AutorValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +13,14 @@ import java.util.UUID;
 @Service
 public class AutorService {
 
-    private final AutorRepository autorRepository;
+    @Autowired
+    AutorRepository autorRepository;
 
-    public AutorService(AutorRepository autorRepository) {
-        this.autorRepository = autorRepository;
-    }
+    @Autowired
+    AutorValidator validator;
 
     public Autor salvar(Autor autor){
+        validator.validar(autor);
         return autorRepository.save(autor);
     }
 
@@ -26,6 +28,7 @@ public class AutorService {
         if (autor.getId() == null){
             throw  new IllegalArgumentException("Para atualizar o Autor precisa está salvo no banco de dados");
         }
+        validator.validar(autor);
         autorRepository.save(autor);
     }
 
