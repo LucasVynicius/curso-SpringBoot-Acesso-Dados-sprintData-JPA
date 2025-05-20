@@ -22,7 +22,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("livros")
 @RequiredArgsConstructor
-public class LivroController {
+public class LivroController implements GenericController {
 
     @Autowired
     LivroService livroService;
@@ -34,11 +34,7 @@ public class LivroController {
         try{
             Livro livro = livroMapper.toEntity(livroDTO);
             livroService.salvar(livro);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}").
-                    buildAndExpand(livro.getId()).
-                    toUri();
+            URI location = gerarHeaderLocation(livro.getId());
             return ResponseEntity.created(location).build();
         } catch (RegistroDuplicadoException e){
             var erroDTO = ErroResposta.conflito(e.getMessage());
