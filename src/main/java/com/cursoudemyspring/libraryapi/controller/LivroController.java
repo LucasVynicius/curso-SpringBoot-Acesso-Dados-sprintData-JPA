@@ -3,6 +3,7 @@ package com.cursoudemyspring.libraryapi.controller;
 import com.cursoudemyspring.libraryapi.dto.CadastroLivroDTO;
 import com.cursoudemyspring.libraryapi.dto.ErroResposta;
 import com.cursoudemyspring.libraryapi.exceptions.RegistroDuplicadoException;
+import com.cursoudemyspring.libraryapi.mappers.LivroMapper;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import com.cursoudemyspring.libraryapi.service.LivroService;
@@ -25,20 +26,19 @@ public class LivroController {
 
     @Autowired
     LivroService livroService;
+    @Autowired
+    LivroMapper livroMapper;
 
     @PostMapping
     public ResponseEntity<Object> salvarLivro(@RequestBody @Valid CadastroLivroDTO livroDTO){
         try{
-            Livro livroEntidade = livroDTO.();
-            livroService.salvar
-                    (livroEntidade);
-
+            Livro livro = livroMapper.toEntity(livroDTO);
+            livroService.salvar(livro);
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
                     .path("/{id}").
-                    buildAndExpand(livroEntidade.getId()).
+                    buildAndExpand(livro.getId()).
                     toUri();
-
             return ResponseEntity.created(location).build();
         } catch (RegistroDuplicadoException e){
             var erroDTO = ErroResposta.conflito(e.getMessage());
