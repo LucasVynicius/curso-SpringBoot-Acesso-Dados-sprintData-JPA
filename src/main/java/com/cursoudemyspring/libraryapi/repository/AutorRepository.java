@@ -1,7 +1,9 @@
 package com.cursoudemyspring.libraryapi.repository;
 
 import com.cursoudemyspring.libraryapi.model.Autor;
+import com.cursoudemyspring.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ import java.util.UUID;
 
 
 @Repository
-public interface AutorRepository extends JpaRepository<Autor, UUID> {
+public interface AutorRepository extends JpaRepository<Autor, UUID>{
 
     List<Autor> findByNome(String nome);
     List<Autor> findByNacionalidade(String nacionalidade);

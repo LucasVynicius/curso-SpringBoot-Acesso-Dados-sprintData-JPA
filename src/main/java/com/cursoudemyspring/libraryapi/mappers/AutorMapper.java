@@ -4,7 +4,7 @@ import com.cursoudemyspring.libraryapi.dto.AutorDTO;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = AutorMapper.class)
 public interface AutorMapper {
 
     Autor toEntity(AutorDTO autorDTO);

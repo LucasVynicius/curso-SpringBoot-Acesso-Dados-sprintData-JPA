@@ -1,6 +1,7 @@
 package com.cursoudemyspring.libraryapi.mappers;
 
 import com.cursoudemyspring.libraryapi.dto.CadastroLivroDTO;
+import com.cursoudemyspring.libraryapi.dto.ResultadoPesquisaDTO;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import com.cursoudemyspring.libraryapi.repository.AutorRepository;
 import org.mapstruct.Mapper;
@@ -16,4 +17,5 @@ public abstract class LivroMapper {
     @Mapping(target = "autor", expression = "java( autorRepository.findById(livroDTO.idAutor()).orElse(null) )")
     public abstract Livro toEntity(CadastroLivroDTO livroDTO);
 
+    public abstract ResultadoPesquisaDTO toDTO(Livro livro);
 }
