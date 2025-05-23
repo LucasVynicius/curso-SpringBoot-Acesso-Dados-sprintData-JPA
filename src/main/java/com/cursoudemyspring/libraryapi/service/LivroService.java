@@ -34,7 +34,7 @@ public class LivroService {
         livroRepository.delete(livro);
     }
 
-    public List<Livro> pesquisa(String isbn, String titulo,String nomeAutor, GeneroLivro generoLivro, Integer dataPublicacao){
+    public List<Livro> pesquisa(String isbn, String titulo,String nomeAutor, GeneroLivro generoLivro, Integer anoPublicacao){
 
         Specification<Livro> specs = Specification.where(
                 (root, query, cb) -> cb.conjunction());
@@ -50,6 +50,13 @@ public class LivroService {
             specs = specs.and(generoEqual(generoLivro));
         }
 
+        if(anoPublicacao != null){
+            specs = specs.and(anoPublicacaoEqual(anoPublicacao));
+        }
+
+        if(nomeAutor != null){
+            specs = specs.and(nomeAutorLike(nomeAutor));
+        }
 
 
         return livroRepository.findAll(specs);

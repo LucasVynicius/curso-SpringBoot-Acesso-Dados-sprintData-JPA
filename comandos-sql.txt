@@ -4,7 +4,7 @@ create table autor(
 	data_nascimento date not null,
 	nacionalidade varchar(50) not null,
 	data_cadastro timestamp,
-	data_atualizacao timestam,
+	data_atualizacao timestamp,
 	id_usuario uuid
 );
 

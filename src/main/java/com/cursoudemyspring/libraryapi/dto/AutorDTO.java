@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record AutorDTO(
-        UUID uuid,
+        UUID id,
         @NotBlank(message = "Campo obrigatorio")
         @Size(min = 10, max = 130, message = "Campo fora do tamanho padrão")
         String nome,

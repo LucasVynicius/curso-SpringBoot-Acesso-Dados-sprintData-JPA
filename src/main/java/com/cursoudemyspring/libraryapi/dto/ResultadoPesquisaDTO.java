@@ -13,6 +13,6 @@ public record ResultadoPesquisaDTO(
         LocalDate dataPublicacao,
         GeneroLivro genero,
         Double preco,
-        AutorDTO autorDTO
+        AutorDTO autor
 ) {
 }
