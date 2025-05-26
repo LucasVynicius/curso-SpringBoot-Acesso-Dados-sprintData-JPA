@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -129,8 +130,8 @@ public class LivroRepositoryTest {
 
     @Test
     void pesquisarPorIsbnTest(){
-        List<Livro> lista = repository.findByIsbn("");
-        lista.forEach(System.out::println);
+        Optional<Livro> livro = repository.findByIsbn("");
+        livro.ifPresent(System.out::println);
     }
 
     @Test

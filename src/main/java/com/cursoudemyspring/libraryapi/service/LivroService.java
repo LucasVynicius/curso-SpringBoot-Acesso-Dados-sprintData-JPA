@@ -4,6 +4,7 @@ import com.cursoudemyspring.libraryapi.enums.GeneroLivro;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import com.cursoudemyspring.libraryapi.repository.LivroRepository;
 import com.cursoudemyspring.libraryapi.repository.specs.LivroSpecs;
+import com.cursoudemyspring.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -21,8 +22,11 @@ public class LivroService {
 
     @Autowired
     LivroRepository livroRepository;
+    @Autowired
+    LivroValidator livroValidator;
 
     public Livro salvar(Livro livro){
+        livroValidator.validar(livro);
         return livroRepository.save(livro);
     }
 
@@ -60,5 +64,13 @@ public class LivroService {
 
 
         return livroRepository.findAll(specs);
+    }
+
+    public void atualizar(Livro livro) {
+        if (livro.getId() != null){
+            throw  new IllegalArgumentException("Para atualizar o livro precisa está salvo no banco de dados");
+        }
+        livroValidator.validar(livro);
+        livroRepository.save(livro);
     }
 }
