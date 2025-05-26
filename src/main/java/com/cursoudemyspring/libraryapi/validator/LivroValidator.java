@@ -1,5 +1,6 @@
 package com.cursoudemyspring.libraryapi.validator;
 
+import com.cursoudemyspring.libraryapi.exceptions.CampoInvalidoException;
 import com.cursoudemyspring.libraryapi.exceptions.RegistroDuplicadoException;
 import com.cursoudemyspring.libraryapi.model.Livro;
 import com.cursoudemyspring.libraryapi.repository.LivroRepository;
@@ -11,6 +12,8 @@ import java.util.Optional;
 @Component
 public class LivroValidator {
 
+    private static final int ANO_EXIGENCIA_PRECO = 2020;
+
     @Autowired
     LivroRepository livroRepository;
 
@@ -18,6 +21,14 @@ public class LivroValidator {
         if(existeLivroComIsbn(livro)){
             throw new RegistroDuplicadoException("ISBN já cadastrado!");
         }
+
+        if (isPrecoObrigatorio(livro)){
+            throw new CampoInvalidoException("Preco", "Para livros com o ano de publicação a partir de 2020, o preco é obrigatório ");
+        }
+    }
+
+    private boolean isPrecoObrigatorio(Livro livro) {
+        return livro.getPreco() == null && livro.getDataPublicacao().getYear() >= ANO_EXIGENCIA_PRECO;
     }
 
     private boolean existeLivroComIsbn(Livro livro){
