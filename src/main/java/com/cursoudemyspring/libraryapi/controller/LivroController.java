@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.net.URI;
 import java.util.List;
@@ -54,7 +55,7 @@ public class LivroController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResultadoPesquisaDTO>> pesquisa(
+    public ResponseEntity<Page<ResultadoPesquisaDTO>> pesquisa(
             @RequestParam(value = "isbn", required = false)
             String isbn,
             @RequestParam(value = "titulo", required = false)
@@ -64,15 +65,17 @@ public class LivroController implements GenericController {
             @RequestParam(value = "generoLivro", required = false)
             GeneroLivro generoLivro,
             @RequestParam(value = "data-publicaco", required = false)
-            Integer anoPublicacao
+            Integer anoPublicacao,
+            @RequestParam(value = "pagina", defaultValue = "0")
+            Integer pagina,
+            @RequestParam(value = "tamanho-pagina", defaultValue = "10")
+            Integer tamanhoPagina
     ){
-        var resultado = livroService.pesquisa(isbn, titulo, nomeAutor, generoLivro, anoPublicacao);
-        var lista = resultado
-                .stream()
-                .map(livroMapper::toDTO)
-                .collect(Collectors.toList());
+        Page<Livro> paginaResultado = livroService.pesquisa(isbn, titulo, nomeAutor, generoLivro, anoPublicacao, pagina, tamanhoPagina);
 
-        return ResponseEntity.ok(lista);
+        Page<ResultadoPesquisaDTO> resultado = paginaResultado.map(livroMapper::toDTO);
+
+        return ResponseEntity.ok(resultado);
 
     }
 
