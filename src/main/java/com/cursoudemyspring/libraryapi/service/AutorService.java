@@ -5,6 +5,7 @@ import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.repository.AutorRepository;
 import com.cursoudemyspring.libraryapi.repository.LivroRepository;
 import com.cursoudemyspring.libraryapi.validator.AutorValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -15,16 +16,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AutorService {
 
-    @Autowired
-    AutorRepository autorRepository;
 
-    @Autowired
-    AutorValidator validator;
+    public final AutorRepository autorRepository;
 
-    @Autowired
-    LivroRepository livroRepository;
+
+    public final AutorValidator validator;
+
+
+    public final LivroRepository livroRepository;
 
     public Autor salvar(Autor autor){
         validator.validar(autor);

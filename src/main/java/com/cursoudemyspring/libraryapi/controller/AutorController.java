@@ -1,17 +1,13 @@
 package com.cursoudemyspring.libraryapi.controller;
 
 import com.cursoudemyspring.libraryapi.dto.AutorDTO;
-import com.cursoudemyspring.libraryapi.dto.ErroResposta;
-import com.cursoudemyspring.libraryapi.exceptions.OperacaoNaoPermitidaException;
-import com.cursoudemyspring.libraryapi.exceptions.RegistroDuplicadoException;
 import com.cursoudemyspring.libraryapi.mappers.AutorMapper;
 import com.cursoudemyspring.libraryapi.model.Autor;
 import com.cursoudemyspring.libraryapi.service.AutorService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -21,12 +17,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/autores")
+@RequiredArgsConstructor
 public class AutorController implements GenericController {
 
-    @Autowired
-    private AutorService autorService;
-    @Autowired
-    AutorMapper autorMapper;
+    private final AutorService autorService;
+    private final AutorMapper autorMapper;
 
 
     @PostMapping

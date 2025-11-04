@@ -31,4 +31,4 @@ Problemas com a porta
 netstat -aof
 
 # Check port:
-netstat -aof | findstr 5432'
+netstat -aof | findstr 5432
