@@ -2,8 +2,10 @@ package com.cursoudemyspring.libraryapi.service;
 
 import com.cursoudemyspring.libraryapi.enums.GeneroLivro;
 import com.cursoudemyspring.libraryapi.model.Livro;
+import com.cursoudemyspring.libraryapi.model.Usuario;
 import com.cursoudemyspring.libraryapi.repository.LivroRepository;
 import com.cursoudemyspring.libraryapi.repository.specs.LivroSpecs;
+import com.cursoudemyspring.libraryapi.security.SecurityService;
 import com.cursoudemyspring.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,15 @@ import static com.cursoudemyspring.libraryapi.repository.specs.LivroSpecs.*;
 @RequiredArgsConstructor
 public class LivroService {
 
-    @Autowired
-    LivroRepository livroRepository;
-    @Autowired
-    LivroValidator livroValidator;
+
+    private final LivroRepository livroRepository;
+    private final LivroValidator livroValidator;
+    private final SecurityService securityService;
 
     public Livro salvar(Livro livro){
         livroValidator.validar(livro);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        livro.setUsuario(usuario);
         return livroRepository.save(livro);
     }
 

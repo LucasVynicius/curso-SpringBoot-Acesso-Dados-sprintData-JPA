@@ -2,8 +2,10 @@ package com.cursoudemyspring.libraryapi.service;
 
 import com.cursoudemyspring.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import com.cursoudemyspring.libraryapi.model.Autor;
+import com.cursoudemyspring.libraryapi.model.Usuario;
 import com.cursoudemyspring.libraryapi.repository.AutorRepository;
 import com.cursoudemyspring.libraryapi.repository.LivroRepository;
+import com.cursoudemyspring.libraryapi.security.SecurityService;
 import com.cursoudemyspring.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,12 @@ public class AutorService {
 
     public final LivroRepository livroRepository;
 
+    public final SecurityService securityService;
+
     public Autor salvar(Autor autor){
         validator.validar(autor);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        autor.setUsuario(usuario);
         return autorRepository.save(autor);
     }
 

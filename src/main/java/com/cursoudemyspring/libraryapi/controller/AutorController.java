@@ -3,10 +3,16 @@ package com.cursoudemyspring.libraryapi.controller;
 import com.cursoudemyspring.libraryapi.dto.AutorDTO;
 import com.cursoudemyspring.libraryapi.mappers.AutorMapper;
 import com.cursoudemyspring.libraryapi.model.Autor;
+import com.cursoudemyspring.libraryapi.model.Usuario;
+import com.cursoudemyspring.libraryapi.security.SecurityService;
 import com.cursoudemyspring.libraryapi.service.AutorService;
+import com.cursoudemyspring.libraryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,10 +27,12 @@ import java.util.stream.Collectors;
 public class AutorController implements GenericController {
 
     private final AutorService autorService;
+    private final SecurityService securityService;
     private final AutorMapper autorMapper;
 
 
     @PostMapping
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO autorDTO) {
         Autor autor = autorMapper.toEntity(autorDTO);
         autorService.salvar(autor);
