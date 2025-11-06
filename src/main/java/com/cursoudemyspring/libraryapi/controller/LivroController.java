@@ -8,27 +8,25 @@ import com.cursoudemyspring.libraryapi.model.Livro;
 import com.cursoudemyspring.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("livros")
 @RequiredArgsConstructor
 public class LivroController implements GenericController {
 
-    @Autowired
-    LivroService livroService;
-    @Autowired
-    LivroMapper livroMapper;
+
+    private final LivroService livroService;
+    private final LivroMapper livroMapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Void> salvarLivro(@RequestBody @Valid CadastroLivroDTO livroDTO) {
         Livro livro = livroMapper.toEntity(livroDTO);
         livroService.salvar(livro);
@@ -54,6 +52,7 @@ public class LivroController implements GenericController {
 
     }
 
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     @GetMapping
     public ResponseEntity<Page<ResultadoPesquisaDTO>> pesquisa(
             @RequestParam(value = "isbn", required = false)
